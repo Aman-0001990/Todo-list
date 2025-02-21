@@ -1,0 +1,17 @@
+{
+  
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "1. Install Node.js, npm, and set up a basic Express.js server.\r 2. Learn about package.json and how dependencies work.\r 3. Run a simple \"Hello World\" API.",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
