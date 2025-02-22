@@ -7,3 +7,9 @@
 1. Install Node.js, npm, and set up a basic Express.js server.
 2. Learn about package.json and how dependencies work.
 3. Run a simple "Hello World" API.
+
+
+### What You Learned Day-2
+1. How to install and set up MongoDB
+2. How to connect MongoDB to Express using Mongoose
+3. How to define a Task model
