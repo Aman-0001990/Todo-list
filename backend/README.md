@@ -13,3 +13,9 @@
 1. How to install and set up MongoDB
 2. How to connect MongoDB to Express using Mongoose
 3. How to define a Task model
+
+### Day 3: Implementing User Registration & Password Hashing with Bcrypt
+Today, we'll:
+1. Set up a User model in MongoDB
+2. Implement User Registration (storing users in the database)
+3. Hash passwords using Bcrypt for security
