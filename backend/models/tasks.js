@@ -2,7 +2,7 @@ const mongoose =require("mongoose");
 
 const taskSchema=new mongoose.Schema({
     tittle:{
-        tyep:String,
+        type:String,
         required:true
     },
     completed:{

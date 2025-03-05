@@ -19,3 +19,25 @@ Today, we'll:
 1. Set up a User model in MongoDB
 2. Implement User Registration (storing users in the database)
 3. Hash passwords using Bcrypt for security
+
+
+### Day 4: Implementing User Login & JWT Authentication
+Today, we'll:
+✅ Implement User Login with email and password
+✅ Generate a JWT (JSON Web Token) for authentication
+✅ Secure password verification with Bcrypt
+
+
+### Next Step (Day 5 Preview)
+Tomorrow, we’ll:
+✅ Set up a Task model in MongoDB
+✅ Implement CRUD operations for tasks (Create, Read, Update, Delete)
+✅ Secure task routes using JWT authentication
+
+Let me know if you have any questions before moving forward! 🚀
+
+### Day 6: User Profile & Security Enhancements
+Today, we will:
+✅ Implement User Profile API (fetch user details)
+✅ Improve Error Handling for better debugging
+✅ Enhance Security Best Practices (e.g., CORS, helmet, rate limiting)

@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
-
+const authMiddleware = require("./middlewares/authMiddleware");
 const authRoutes=require('./routes/authRoutes');
 
 const app = express();
@@ -21,14 +21,40 @@ mongoose.connect(mongoURI, {
 .then(() => console.log(`😊Mongoose connected 😊`))
 .catch((error) => console.log(`🤣Not Connected 🤣${error}`))
 
-// const db = mongoose.connection;
+const db = mongoose.connection;
 
-// db.on("error", console.error.bind(console, "MongoDB connection error:"));
-// db.once("open", () => console.log("Conneted the MongoDB"));
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => console.log("Conneted the MongoDB"));
 
-// app.get('/', (req, res) => {
-//     res.send("Conneted the MongoDB");
-// })
+app.get('/', (req, res) => {
+    res.send("Conneted the MongoDB");
+})
+
+
+app.get("/api/protected", authMiddleware, (req, res) => {
+    res.json({ message: "Access granted", user: req.user });
+  });
+
+
+
+  const taskRoutes = require("./routes/taskRoutes");
+
+  app.use("/api/tasks", taskRoutes);
+  
+
+
+  const userRoutes = require("./routes/userRoutes");
+  app.use("/api/users", userRoutes);
+  
+
+
+  const errorHandler = require("./middlewares/errorHandler");
+  app.use(errorHandler);
+  
+
+
+
+
 
 const PORT =process.env.PORT || 5000;
 
