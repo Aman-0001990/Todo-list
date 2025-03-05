@@ -84,4 +84,79 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 });
 
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const { status } = req.query;
+    let query = { user: req.user.userId };
+
+    // Apply filtering if status is provided
+    if (status) {
+      query.status = status; // status can be 'pending' or 'completed'
+    }
+
+    const tasks = await Task.find(query);
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching tasks", error });
+  }
+});
+
+
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const { status, sortBy } = req.query;
+    let query = { user: req.user.userId };
+
+    if (status) query.status = status;
+
+    // Default sorting by newest first (-1 means descending)
+    let sortOption = { createdAt: -1 };
+
+    if (sortBy === "oldest") {
+      sortOption = { createdAt: 1 };
+    }
+
+    const tasks = await Task.find(query).sort(sortOption);
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching tasks", error });
+  }
+});
+
+
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const { status, sortBy, page, limit } = req.query;
+    let query = { user: req.user.userId };
+
+    if (status) query.status = status;
+
+    let sortOption = { createdAt: -1 };
+    if (sortBy === "oldest") sortOption = { createdAt: 1 };
+
+    // Default pagination values
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 5;
+    const skip = (pageNumber - 1) * pageSize;
+
+    const tasks = await Task.find(query)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(pageSize);
+
+    // Count total tasks for pagination info
+    const totalTasks = await Task.countDocuments(query);
+
+    res.json({
+      tasks,
+      totalPages: Math.ceil(totalTasks / pageSize),
+      currentPage: pageNumber,
+      totalTasks,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching tasks", error });
+  }
+});
+
+
 module.exports = router;
