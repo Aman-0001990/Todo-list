@@ -214,5 +214,59 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ success: false, message: "Error deleting task", error });
   }
 });
+router.patch("/restore/:id", authMiddleware, async (req, res) => {
+  try {
+    const task = await Task.findOne({ _id: req.params.id, user: req.user.userId });
+
+    if (!task) {
+      return res.status(404).json({ success: false, message: "Task not found" });
+    }
+
+    if (!task.isDeleted) {
+      return res.status(400).json({ success: false, message: "Task is not deleted" });
+    }
+
+    task.isDeleted = false;
+    await task.save();
+
+    res.json({ success: true, message: "Task restored successfully", task });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error restoring task", error });
+  }
+});
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password"); // Exclude password
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, message: "User profile retrieved", user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching profile", error });
+  }
+});
+router.put("/profile", authMiddleware, async (req, res) => {
+  try {
+    const { name, email } = req.body;
+
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    await user.save();
+    res.json({ success: true, message: "Profile updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error updating profile", error });
+  }
+});
+router.post("/logout", authMiddleware, (req, res) => {
+  res.json({ success: true, message: "User logged out successfully" });
+});
 
 module.exports = router;
