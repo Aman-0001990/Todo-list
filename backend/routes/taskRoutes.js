@@ -158,5 +158,61 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const { status, sortBy, page, limit, search } = req.query;
+    let query = { user: req.user.userId, isDeleted: false }; // Ignore deleted tasks
+
+    if (status) query.status = status;
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } }, // Case-insensitive search
+        { description: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    let sortOption = { createdAt: -1 };
+    if (sortBy === "oldest") sortOption = { createdAt: 1 };
+
+    const pageNumber = parseInt(page) || 1;
+    const pageSize = parseInt(limit) || 5;
+    const skip = (pageNumber - 1) * pageSize;
+
+    const tasks = await Task.find(query)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(pageSize);
+
+    const totalTasks = await Task.countDocuments(query);
+
+    res.json({
+      success: true,
+      message: "Tasks retrieved successfully",
+      tasks,
+      totalPages: Math.ceil(totalTasks / pageSize),
+      currentPage: pageNumber,
+      totalTasks,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error fetching tasks", error });
+  }
+});
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const task = await Task.findOne({ _id: req.params.id, user: req.user.userId });
+
+    if (!task) {
+      return res.status(404).json({ success: false, message: "Task not found" });
+    }
+
+    task.isDeleted = true; // Mark as deleted
+    await task.save();
+
+    res.json({ success: true, message: "Task deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error deleting task", error });
+  }
+});
 
 module.exports = router;
