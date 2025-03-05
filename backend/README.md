@@ -36,3 +36,8 @@ Tomorrow, we’ll:
 
 Let me know if you have any questions before moving forward! 🚀
 
+### Day 6: User Profile & Security Enhancements
+Today, we will:
+✅ Implement User Profile API (fetch user details)
+✅ Improve Error Handling for better debugging
+✅ Enhance Security Best Practices (e.g., CORS, helmet, rate limiting)
