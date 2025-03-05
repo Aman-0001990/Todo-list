@@ -1,24 +1,14 @@
 const mongoose = require("mongoose");
 
-const TaskSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const TaskSchema = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    title: { type: String, required: true },
+    description: { type: String },
+    status: { type: String, enum: ["pending", "completed"], default: "pending" },
+    isDeleted: { type: Boolean, default: false }, // Soft delete flag
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["pending", "success", "declined"],
-    default: "pending",
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Task", TaskSchema);
