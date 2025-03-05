@@ -36,6 +36,26 @@ app.get("/api/protected", authMiddleware, (req, res) => {
   });
 
 
+
+  const taskRoutes = require("./routes/taskRoutes");
+
+  app.use("/api/tasks", taskRoutes);
+  
+
+
+  const userRoutes = require("./routes/userRoutes");
+  app.use("/api/users", userRoutes);
+  
+
+
+  const errorHandler = require("./middlewares/errorHandler");
+  app.use(errorHandler);
+  
+
+
+
+
+
 const PORT =process.env.PORT || 5000;
 
 app.listen(PORT, () => {

@@ -35,12 +35,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-
-
-
-
-
-
 // User Registration Route
 //  User Login Route
 router.post('/login',async (req,res) => {
@@ -48,7 +42,7 @@ router.post('/login',async (req,res) => {
     try{
         const {email,password}=req.body;
 
-        const user=await User.findOne({email});
+        const user=await User.findOne({email });
         // Check if user exists
         if(!user){
             return res.status(400).json({message:"Invalid Email or Password"});
@@ -56,7 +50,7 @@ router.post('/login',async (req,res) => {
         // Compare entered password with hashed password in db
         const isMatch=await bcrypt.compare(password,user.password);
         if(!isMatch){
-            return res.status(400).json({message:"Invalid email or password "})
+            return res.status(400).json({message:"Invalid password"})
         }
         const token =jwt.sign({userId:user._id},process.env.JWT_SECRET,{
             expiresIn:"1h",
