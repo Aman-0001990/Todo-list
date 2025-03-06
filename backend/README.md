@@ -41,3 +41,48 @@ Today, we will:
 ✅ Implement User Profile API (fetch user details)
 ✅ Improve Error Handling for better debugging
 ✅ Enhance Security Best Practices (e.g., CORS, helmet, rate limiting)
+
+
+###  Next Step (Day 7 Preview)
+Tomorrow, we’ll:
+✅ Implement Task Filtering & Sorting
+✅ Add Pagination for Tasks
+✅ Improve User Experience in API responses
+
+
+
+
+
+
+## 🚀 Next Step (Day 8 Preview)
+Tomorrow, we’ll:
+✅ Implement Task Search (search by title or description)
+✅ Improve Response Structure for Better UX
+✅ Add Soft Delete (instead of permanent deletion)
+
+##Next Step (Day 9 Preview)
+Tomorrow, we’ll:
+✅ Implement Task Recovery (Restore Soft-Deleted Tasks)
+✅ Implement User Profile API (View & Update Profile)
+✅ Implement Logout Functionality
+
+
+###  Next Step (Day 10 Preview)
+Tomorrow, we’ll:
+✅ Implement Task Priority System
+✅ Add Due Dates for Tasks
+✅ Improve Task Sorting
+
+
+### Next Step (Day 11 Preview)
+Tomorrow, we will:
+✅ Implement Task Filtering (By Priority & Status)
+✅ Add Pagination for Task Lists
+✅ Improve Error Handling & Validation
+
+Let me know if you have any questions before moving
+
+### Day 12 ✔ Implemented Task Filtering (By Priority & Status)
+✔ Added Pagination (Page & Limit Options)
+✔ Improved Validation (Express Validator)
+✔ Enhanced Error Handling (More Meaningful Messages)

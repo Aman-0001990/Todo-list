@@ -3,6 +3,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const authMiddleware = require("./middlewares/authMiddleware");
 const authRoutes=require('./routes/authRoutes');
+const checkTasksForReminders = require("./utils/taskReminder");
+
+// Start the reminder service
+checkTasksForReminders();
 
 const app = express();
 

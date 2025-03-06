@@ -1,6 +1,15 @@
 const express = require("express");
 const User = require("../models/User");
 const authMiddleware = require("../middlewares/authMiddleware");
+// const express = require("express");
+
+const { updateProfile } = require("../controllers/userController");
+
+// const router = express.Router();
+
+router.put("/profile", protect, updateProfile);  // Update profile
+
+module.exports = router;
 
 const router = express.Router();
 
@@ -19,5 +28,9 @@ router.get("/profile", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Error fetching user profile", error });
   }
 });
+const { requestPasswordReset, resetPassword } = require("../controllers/userController");
+
+router.post("/forgot-password", requestPasswordReset); // Request password reset
+router.post("/reset-password/:token", resetPassword); // Reset password
 
 module.exports = router;
